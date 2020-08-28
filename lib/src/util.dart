@@ -2,6 +2,7 @@ import 'package:built_value/built_value.dart';
 import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:flutter_kostlivec/src/state/state_holder.dart';
 import 'package:get_it/get_it.dart';
+import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
 final getMy = GetIt.instance.get;
@@ -25,4 +26,8 @@ extension WatchContextState on BuildContext {
   T watchState<T extends Built<T, Builder<T, dynamic>>>() {
     return this.watch<StateHolder<T>>().state;
   }
+}
+
+extension Logging on Object {
+  Logger get log => Logger(this.runtimeType.toString());
 }
