@@ -1,5 +1,6 @@
 import 'package:built_value/built_value.dart';
 import 'package:built_value/serializer.dart';
+import 'package:flutter/material.dart' show Locale;
 import 'package:flutter_kostlivec/src/app_mode.dart';
 
 part 'app_config_state.g.dart';
@@ -11,6 +12,8 @@ abstract class AppConfigState implements Built<AppConfigState, AppConfigStateBui
   int get counter;
 
   AppMode get mode;
+
+  Locale get locale;
 
 //  @nullable
 //  int get age;
