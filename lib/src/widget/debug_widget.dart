@@ -11,7 +11,7 @@ class DebugWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return getMyState<AppConfigState>().state.mode == AppMode.PROD ? child : _buildDebugContent(child);
+    return getMyStateHolder<AppConfigState>().state.mode == AppMode.PROD ? child : _buildDebugContent(child);
   }
 
   Widget _buildDebugContent(Widget _) {

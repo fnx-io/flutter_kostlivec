@@ -25,13 +25,20 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            Text(context.messages.pushedMessage),
             Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '${context.watchState<AppConfigState>().counter}',
+              context.watchState<AppConfigState>().counter.toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
+            Row(
+              children: <Widget>[
+                Spacer(),
+                languageButton("cs", context),
+                Spacer(),
+                languageButton("en", context),
+                Spacer(),
+              ],
+            )
           ],
         ),
       ),
@@ -40,6 +47,14 @@ class _HomeScreenState extends State<HomeScreen> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+
+  Widget languageButton(String langCode, BuildContext context) {
+    String curLang = context.watchState<AppConfigState>().locale.languageCode;
+    return FlatButton(
+      child: Text(langCode),
+      onPressed: langCode == curLang ? null : () => getMy<AppConfigService>().setLocale(langCode),
     );
   }
 }

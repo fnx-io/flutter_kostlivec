@@ -1,7 +1,9 @@
-import 'package:built_value/built_value.dart';
 import 'package:flutter/widgets.dart' show ChangeNotifier;
 
-class StateHolder<STATE extends Built<dynamic, dynamic>> with ChangeNotifier {
+///
+/// Různé instance této třídy si drží odkaz na odpovídající stavový objekt.
+///
+class StateHolder<STATE> with ChangeNotifier {
   STATE _state;
 
   StateHolder(this._state);

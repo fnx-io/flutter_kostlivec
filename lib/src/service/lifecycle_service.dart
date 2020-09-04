@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_kostlivec/src/app_mode.dart';
+import 'package:flutter_kostlivec/src/i69n/locales.dart';
+import 'package:flutter_kostlivec/src/i69n/messages.i69n.dart';
 import 'package:flutter_kostlivec/src/service/persistence_service.dart';
 import 'package:flutter_kostlivec/src/state/app_config_state.dart';
 import 'package:flutter_kostlivec/src/state/state_holder.dart';
@@ -11,10 +13,14 @@ import 'package:provider/provider.dart';
 
 import 'app_config_service.dart';
 
+///
+/// Konfigurace všeho. Výchozí stavy objektů, registrace hooků, založení instancí servis a stavů v get_it.
+///
+///
 class LifecycleService extends WidgetsBindingObserver {
   LifecycleService._();
 
-  static Widget configureApp(AppMode mode, Widget appWidget) {
+  static Future<Widget> configureApp(AppMode mode, Widget appWidget) async {
     // configure logging
     Logger.root.onRecord.listen((LogRecord rec) {
       print('${rec.level.name.padRight(6)}: ${rec.time}: ${rec.loggerName.padRight(20)}: ${rec.message}');
@@ -31,25 +37,34 @@ class LifecycleService extends WidgetsBindingObserver {
     Logger log = Logger("AppLifecycleService");
 
     log.info("Configuring services ...");
-    me._configureServices();
+    await me._configureServices();
 
     log.info("Configuring initial state ...");
-    me._configureInitialState(mode);
+    await me._configureInitialState(mode);
+
+    log.info("Loading previous persistent state ...");
+    await getMy<PersistenceService>().loadPreviousState();
 
     log.info("Configuring hooks ...");
-    me._configureHooks();
+    await me._configureHooks();
 
     log.info("Preparing providers ...");
     return MultiProvider(
       providers: [
-        ChangeNotifierProvider(create: (_) => getMyState<AppConfigState>()),
+        ChangeNotifierProvider(create: (_) => getMyStateHolder<AppConfigState>()),
+        ChangeNotifierProvider(create: (_) => getMyStateHolder<Messages>()),
       ],
       child: DebugWidget(child: appWidget),
     );
   }
 
   Future _configureInitialState(AppMode mode) async {
-    GetIt.instance.registerSingleton(StateHolder<AppConfigState>(getMy<AppConfigService>().buildInitialState(mode)));
+    log.info("... AppConfigState");
+    var defaultAppConfig = getMy<AppConfigService>().prepareDefaultState(mode);
+    GetIt.instance.registerSingleton(StateHolder<AppConfigState>(defaultAppConfig));
+
+    log.info("... Messages");
+    GetIt.instance.registerSingleton(StateHolder<Messages>(getMessagesByLocale(defaultAppConfig.locale)));
   }
 
   Future _configureServices() async {
@@ -58,7 +73,7 @@ class LifecycleService extends WidgetsBindingObserver {
     GetIt.instance.registerSingleton(PersistenceService());
   }
 
-  void _configureHooks() {
+  Future _configureHooks() async {
     WidgetsBinding.instance.addObserver(this);
   }
 

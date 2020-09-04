@@ -1,9 +1,10 @@
 // ignore_for_file: unused_element, unused_field, camel_case_types, annotate_overrides, prefer_single_quotes
 // GENERATED FILE, do not edit!
 import 'package:i69n/i69n.dart' as i69n;
+import 'messages.i69n.dart';
 
-String get _languageCode => 'en';
-String get _localeName => 'en';
+String get _languageCode => 'cs';
+String get _localeName => 'cs';
 
 String _plural(int count,
         {String zero,
@@ -33,9 +34,9 @@ String _cardinal(int count,
     i69n.cardinal(count, _languageCode,
         zero: zero, one: one, two: two, few: few, many: many, other: other);
 
-class Messages implements i69n.I69nMessageBundle {
-  const Messages();
-  String get pushedMessage => "You have pushed the button this many times:";
+class Messages_cs extends Messages {
+  const Messages_cs();
+  String get pushedMessage => "Čudl jsi zmáčnul tolikrát:";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -46,7 +47,7 @@ class Messages implements i69n.I69nMessageBundle {
       case 'pushedMessage':
         return pushedMessage;
       default:
-        throw Exception('Message $key doesn\'t exist in $this');
+        return super[key];
     }
   }
 }
