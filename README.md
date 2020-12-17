@@ -75,6 +75,60 @@ v persistence_service.dart (_buildPersistentState a _restorePersistenState).
 
 ## Aplikace / obrazovky / navigace ##
 
+Používá se Navigator, routes jsou uložené v `lib/src/app.dart`. Pro navigaci použijeme normálně
+`Navigator.pushNamed(context, route_name);`
+
+### Editační obrazovka ###
+
+Jestliže potřebujete editovat novou nebo existující položku ve zvláštní obrazovce,
+dá se postupovat takto:
+
+* Uděláme nový state object, který chceme editovat (buď nový, nebo kopii existujícího, jež editujeme). Ten state object je immutable.
+* Uděláme StateHolder pro tento nový state object. (StateHolder je vlastně ChangeNotifier). Celé např.:
+
+    holder = new StateHolder(new ItemState((ItemStateBuilder b) => b
+      ..v1 = 1
+      ..name = "NEW"))
+
+* Máme provider. Takže editační obrazovka bude Consumer, něco takového:
+
+    Widget build(BuildContext context) {
+      return Consumer<StateHolder<ItemState>>(builder: (context, value, child) {
+        // vlastní hodnota ke zobrazení
+        ItemState itemState = value.state;
+        return Text("---> $itemState");
+      }
+    }
+
+    // a pokud ten state object editujeme, tak protože StateHolder je ChangeNotifier,
+    // tak nám tady notifikuje toho providera, a způsobí "rebuild" editovací obrazovky.
+    void _editItemText(StateHolder<ItemState>value, String newText) {
+      holder.state = holder.state.rebuild((ItemStateBuilder b) {
+        b.replace(holder.state);
+        b.name = name;
+        return b;
+      });
+    }
+
+* A editovatcí obrazovku vyvoláme takto:
+
+    var ret = await Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => ChangeNotifierProvider(
+          create: (_) => holder,
+          child: EditItemScreen(),
+        ),
+      ),
+    );
+    if (null == ret) {
+      return;  // back button
+    }
+    if ("SAVE" == ret) {
+      // uložíme holder.state do našeho app state
+    }
+
+
 ## Lokalizace ##
 
 ## Theme ##
