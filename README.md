@@ -75,7 +75,7 @@ v persistence_service.dart (_buildPersistentState a _restorePersistenState).
 
 ## Aplikace / obrazovky / navigace ##
 
-Používá se Navigator, routes jsou uložené v `lib/src/app.dart`. Pro navigaci použijeme normálně
+Používá se Navigator, routes jsou uložené v [lib/src/app.dart](). Pro navigaci použijeme normálně
 `Navigator.pushNamed(context, route_name);`
 
 ### Editační obrazovka ###
@@ -87,8 +87,8 @@ dá se postupovat takto:
 * Uděláme `StateHolder` pro tento nový state object. (`StateHolder` je vlastně `ChangeNotifier`).
 * Používáme `provider`. Takže editační obrazovka bude volat `context.watch<StateHolder<ItemState>>()` a tím dostane holder editovaného objektu.
 
-Ukázka je v `home_screen.dart` v obsluze tlačítka *editNewItem*, která vytvoří nový item 
-a edituje v `edit_item_screen.dart`.
+Ukázka je v [lib/src/screen/home_screen.dart]() v obsluze tlačítka *editNewItem*, která vytvoří nový item 
+a edituje v [lib/src/screen/edit_item_screen.dart]().
 
 
 ## Lokalizace ##
