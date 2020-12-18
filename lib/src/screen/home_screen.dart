@@ -61,6 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   );
                   if ("SAVE" == ret) {
                     // Editovaná položka je v newItem.state. Můžeme ji někam uložit.
+                    log.info("Item saved:  ${newItem.state.index}/${newItem.state.name}");
                   }
                   // DELETE zde nemá smysl
                 }),

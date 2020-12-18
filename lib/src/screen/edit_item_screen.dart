@@ -34,8 +34,7 @@ class _EditItemState extends State<EditItemScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var value = context.watch<StateHolder<ItemState>>();
-    var item = value.state;
+    var item = context.watchState<ItemState>();
     if (_controller.text != item.name) {
       _controller.value = TextEditingValue(text: item.name);
     }
@@ -68,10 +67,10 @@ class _EditItemState extends State<EditItemScreen> {
               TextField(
                 controller: _controller,
                 onChanged: (String t) {
-                  _updateName(value, t);
+                  _updateName(context.findStateHolder<ItemState>(), t);
                 },
                 onSubmitted: (String t) {
-                  _updateName(value, t);
+                  _updateName(context.findStateHolder<ItemState>(), t);
                 },
               ),
             ],
