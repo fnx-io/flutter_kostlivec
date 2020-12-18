@@ -11,6 +11,15 @@ Nejprve by to chtělo se seznámit s packages:
 
 Pak asi má smysl se nořit dál.
 
+## utils.dart ##
+
+Utils obsahují pár užitečných funkcí a extensions. Takže importnutím dostanete k dispozici:
+
+* Object.log - logger, nakonfigurován v lifecycle_service.dart
+* BuildContext.messages - messages pro aktuální jazyk
+* BuildContext.watchState, BuildContext.readState, BuildContext.findStateHolder
+* getMy, getMyAsync - 
+
 ## State management ##
 
 StateFull widgety se v podstatě nepoužívají, maximálně pro "ephemeral" stav animovaného/chytrého widgetu. Data / aplikační / business
