@@ -36,6 +36,10 @@ String _cardinal(int count,
 class Messages implements i69n.I69nMessageBundle {
   const Messages();
   String get pushedMessage => "You have pushed the button this many times:";
+  String get editNewItem => "Edit a new item";
+  String get SAVE => "SAVE";
+  String get DELETE => "DELETE";
+  String get nameTitle => "Name";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -45,6 +49,14 @@ class Messages implements i69n.I69nMessageBundle {
     switch (key) {
       case 'pushedMessage':
         return pushedMessage;
+      case 'editNewItem':
+        return editNewItem;
+      case 'SAVE':
+        return SAVE;
+      case 'DELETE':
+        return DELETE;
+      case 'nameTitle':
+        return nameTitle;
       default:
         throw Exception('Message $key doesn\'t exist in $this');
     }

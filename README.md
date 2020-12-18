@@ -84,49 +84,11 @@ Jestliže potřebujete editovat novou nebo existující položku ve zvláštní 
 dá se postupovat takto:
 
 * Uděláme nový state object, který chceme editovat (buď nový, nebo kopii existujícího, jež editujeme). Ten state object je immutable.
-* Uděláme StateHolder pro tento nový state object. (StateHolder je vlastně ChangeNotifier). Celé např.:
+* Uděláme `StateHolder` pro tento nový state object. (`StateHolder` je vlastně `ChangeNotifier`).
+* Používáme `provider`. Takže editační obrazovka bude volat `context.watch<StateHolder<ItemState>>()` a tím dostane holder editovaného objektu.
 
-    holder = new StateHolder(new ItemState((ItemStateBuilder b) => b
-      ..v1 = 1
-      ..name = "NEW"))
-
-* Máme provider. Takže editační obrazovka bude Consumer, něco takového:
-
-    Widget build(BuildContext context) {
-      return Consumer<StateHolder<ItemState>>(builder: (context, value, child) {
-        // vlastní hodnota ke zobrazení
-        ItemState itemState = value.state;
-        return Text("---> $itemState");
-      }
-    }
-
-    // a pokud ten state object editujeme, tak protože StateHolder je ChangeNotifier,
-    // tak nám tady notifikuje toho providera, a způsobí "rebuild" editovací obrazovky.
-    void _editItemText(StateHolder<ItemState>value, String newText) {
-      holder.state = holder.state.rebuild((ItemStateBuilder b) {
-        b.replace(holder.state);
-        b.name = name;
-        return b;
-      });
-    }
-
-* A editovatcí obrazovku vyvoláme takto:
-
-    var ret = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider(
-          create: (_) => holder,
-          child: EditItemScreen(),
-        ),
-      ),
-    );
-    if (null == ret) {
-      return;  // back button
-    }
-    if ("SAVE" == ret) {
-      // uložíme holder.state do našeho app state
-    }
+Ukázka je v `home_screen.dart` v obsluze tlačítka *editNewItem*, která vytvoří nový item 
+a edituje v `edit_item_screen.dart`.
 
 
 ## Lokalizace ##
