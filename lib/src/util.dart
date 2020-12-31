@@ -11,15 +11,15 @@ final getMyAsync = GetIt.instance.getAsync;
 
 StateHolder<STATE> getMyStateHolder<STATE>() => GetIt.instance.get<StateHolder<STATE>>();
 
-extension FindContextState on BuildContext {
-  StateHolder<T> findStateHolder<T extends Built<T, Builder<T, dynamic>>>() {
-    return this.read<StateHolder<T>>();
+extension ReadContextState on BuildContext {
+  T readState<T extends Built<T, Builder<T, dynamic>>>() {
+    return Provider.of<StateHolder<T>>(this, listen: false).state;
   }
 }
 
-extension ReadContextState on BuildContext {
-  T readState<T extends Built<T, Builder<T, dynamic>>>() {
-    return this.read<StateHolder<T>>().state;
+extension ReadContextStateHolder on BuildContext {
+  StateHolder<T> getStateHolder<T extends Built<T, Builder<T, dynamic>>>() {
+    return Provider.of<StateHolder<T>>(this, listen: false);
   }
 }
 
@@ -31,6 +31,12 @@ extension WatchContextState on BuildContext {
 
 extension MessagesContext on BuildContext {
   Messages get messages {
+    return Provider.of<StateHolder<Messages>>(this, listen: false).state;
+  }
+}
+
+extension WatchMessagesContext on BuildContext {
+  Messages get watchMessages {
     return this.watch<StateHolder<Messages>>().state;
   }
 }

@@ -38,8 +38,8 @@ class Messages_cs extends Messages {
   const Messages_cs();
   String get pushedMessage => "Čudl jsi zmáčnul tolikrát:";
   String get editNewItem => "Edituj novou položku";
-  String get SAVE => "ULOŽIT";
-  String get DELETE => "SMAZAT";
+  String get save => "uložit";
+  String get delete => "smazat";
   String get nameTitle => "Jméno";
   Object operator [](String key) {
     var index = key.indexOf('.');
@@ -52,10 +52,10 @@ class Messages_cs extends Messages {
         return pushedMessage;
       case 'editNewItem':
         return editNewItem;
-      case 'SAVE':
-        return SAVE;
-      case 'DELETE':
-        return DELETE;
+      case 'save':
+        return save;
+      case 'delete':
+        return delete;
       case 'nameTitle':
         return nameTitle;
       default:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
-import 'package:flutter_kostlivec/src/app_mode.dart';
-import 'package:flutter_kostlivec/src/state/app_config_state.dart';
+import 'package:flutter_kostlivec/src/build_flavor.dart';
+import 'package:flutter_kostlivec/src/state/config_state.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 
 class DebugWidget extends StatelessWidget {
@@ -11,7 +11,7 @@ class DebugWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return getMyStateHolder<AppConfigState>().state.mode == AppMode.PROD ? child : _buildDebugContent(child);
+    return getMyStateHolder<ConfigState>().state.mode == BuildFlavor.PROD ? child : _buildDebugContent(child);
   }
 
   Widget _buildDebugContent(Widget _) {

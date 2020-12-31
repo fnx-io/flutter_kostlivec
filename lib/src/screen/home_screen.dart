@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
-import 'package:flutter_kostlivec/src/screen/edit_item_screen.dart';
-import 'package:flutter_kostlivec/src/service/app_config_service.dart';
-import 'package:flutter_kostlivec/src/state/app_config_state.dart';
-import 'package:flutter_kostlivec/src/state/state_holder.dart';
+import 'package:flutter_kostlivec/src/service/config_service.dart';
+import 'package:flutter_kostlivec/src/service/my_dummy_app_service.dart';
+import 'package:flutter_kostlivec/src/service/story_service.dart';
+import 'package:flutter_kostlivec/src/state/config_state.dart';
 import 'package:flutter_kostlivec/src/state/item_state.dart';
+import 'package:flutter_kostlivec/src/state/my_dummy_app_state.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -18,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  void _incrementCounter() => getMy<AppConfigService>().incrementCounter();
+  void _incrementCounter() => getMy<MyDummyAppService>().incrementCounter();
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
           children: <Widget>[
             Text(context.messages.pushedMessage),
             Text(
-              context.watchState<AppConfigState>().counter.toString(),
+              context.watchState<MyDummyAppState>().counter.toString(),
               style: Theme.of(context).textTheme.headline4,
             ),
             Row(
@@ -47,23 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
             RaisedButton(
                 child: Text(context.messages.editNewItem),
                 onPressed: () async {
-                  var newItem = new StateHolder(new ItemState((ItemStateBuilder b) => b
+                  var someItemToEdit = ItemState((ItemStateBuilder b) => b
                     ..index = 0
-                    ..name = "Unknown name"));
-                  final String ret = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => ChangeNotifierProvider(
-                        create: (_) => newItem,
-                        child: EditItemScreen(),
-                      ),
-                    ),
-                  );
-                  if ("SAVE" == ret) {
-                    // Editovaná položka je v newItem.state. Můžeme ji někam uložit.
-                    log.info("Item saved:  ${newItem.state.index}/${newItem.state.name}");
-                  }
-                  // DELETE zde nemá smysl
+                    ..name = "Položka Vlastička");
+                  await getMy<StoryService>().startItemEdit(context, someItemToEdit);
                 }),
           ],
         ),
@@ -77,10 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget languageButton(String langCode, BuildContext context) {
-    String curLang = context.watchState<AppConfigState>().locale.languageCode;
+    String curLang = context.watchState<ConfigState>().locale.languageCode;
     return FlatButton(
       child: Text(langCode),
-      onPressed: langCode == curLang ? null : () => getMy<AppConfigService>().setLocale(langCode),
+      onPressed: langCode == curLang ? null : () => getMy<ConfigService>().setLocale(langCode),
     );
   }
 }

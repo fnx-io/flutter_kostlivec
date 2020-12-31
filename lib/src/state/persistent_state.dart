@@ -8,8 +8,6 @@ abstract class PersistentState implements Built<PersistentState, PersistentState
 
   String get language;
 
-  int get counter;
-
   PersistentState._();
   factory PersistentState([void Function(PersistentStateBuilder) updates]) = _$PersistentState;
 }

@@ -5,4 +5,4 @@
 /// main_prod.dart
 /// main_test.dart
 ///
-enum AppMode { PROD, TEST }
+enum BuildFlavor { PROD, TEST }

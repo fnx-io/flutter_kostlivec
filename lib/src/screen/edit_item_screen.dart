@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-
 import 'package:flutter_kostlivec/src/i69n/messages.i69n.dart';
+import 'package:flutter_kostlivec/src/service/story_service.dart';
 import 'package:flutter_kostlivec/src/state/item_state.dart';
-import 'package:flutter_kostlivec/src/state/state_holder.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 
 class EditItemScreen extends StatefulWidget {
@@ -19,7 +17,7 @@ class EditItemScreen extends StatefulWidget {
 }
 
 class _EditItemState extends State<EditItemScreen> {
-  Messages get m => getMy<StateHolder<Messages>>().state;
+  Messages get m => context.watchMessages;
   TextEditingController _controller;
 
   void initState() {
@@ -43,14 +41,14 @@ class _EditItemState extends State<EditItemScreen> {
       appBar: AppBar(
         title: Text("${item.index} ${item.name}"),
         actions: <Widget>[
-          TextButton(
-            child: Text(m.DELETE, style: TextStyle(color: Colors.white)),
+          FlatButton(
+            child: Text(m.delete.toUpperCase(), style: TextStyle(color: Colors.white)),
             onPressed: () {
               _delete(context);
             },
           ),
-          TextButton(
-            child: Text(m.SAVE, style: TextStyle(color: Colors.white)),
+          FlatButton(
+            child: Text(m.save.toUpperCase(), style: TextStyle(color: Colors.white)),
             onPressed: () {
               _save(context);
             },
@@ -66,12 +64,8 @@ class _EditItemState extends State<EditItemScreen> {
               Text(m.nameTitle),
               TextField(
                 controller: _controller,
-                onChanged: (String t) {
-                  _updateName(context.findStateHolder<ItemState>(), t);
-                },
-                onSubmitted: (String t) {
-                  _updateName(context.findStateHolder<ItemState>(), t);
-                },
+                onChanged: _updateName,
+                onSubmitted: _updateName,
               ),
             ],
           ),
@@ -80,19 +74,16 @@ class _EditItemState extends State<EditItemScreen> {
     );
   }
 
-  void _updateName(StateHolder<ItemState> holder, String t) {
-    holder.state = holder.state.rebuild((ItemStateBuilder b) {
-      b.replace(holder.state);
-      b.name = t;
-      return b;
-    });
+  void _updateName(String newName) {
+    var holder = context.getStateHolder<ItemState>();
+    holder.state = holder.state.rebuild((b) => b..name = newName);
   }
 
   void _save(BuildContext context) {
-    Navigator.pop(context, "SAVE");
+    Navigator.pop(context, StoryEnding.save);
   }
 
   void _delete(BuildContext context) {
-    Navigator.pop(context, "DELETE");
+    Navigator.pop(context, StoryEnding.delete);
   }
 }

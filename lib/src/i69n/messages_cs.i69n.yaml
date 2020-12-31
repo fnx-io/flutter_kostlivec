@@ -1,5 +1,5 @@
 pushedMessage: "Čudl jsi zmáčnul tolikrát:"
 editNewItem: "Edituj novou položku"
-SAVE: "ULOŽIT"
-DELETE: "SMAZAT"
+save: "uložit"
+delete: "smazat"
 nameTitle: "Jméno"
