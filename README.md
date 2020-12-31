@@ -11,6 +11,15 @@ Nejprve by to chtělo se seznámit s packages:
 
 Pak asi má smysl se nořit dál.
 
+## utils.dart ##
+
+Utils obsahují pár užitečných funkcí a extensions. Takže importnutím dostanete k dispozici:
+
+* Object.log - logger, nakonfigurován v lifecycle_service.dart
+* BuildContext.messages - messages pro aktuální jazyk
+* BuildContext.watchState, BuildContext.readState, BuildContext.findStateHolder
+* getMy, getMyAsync - 
+
 ## State management ##
 
 StateFull widgety se v podstatě nepoužívají, maximálně pro "ephemeral" stav animovaného/chytrého widgetu. Data / aplikační / business
@@ -74,6 +83,22 @@ Při načítání se zase deserializuje a hodnoty se ručně nastrkají do sprá
 v persistence_service.dart (_buildPersistentState a _restorePersistenState).
 
 ## Aplikace / obrazovky / navigace ##
+
+Používá se Navigator, routes jsou uložené v [lib/src/app.dart](). Pro navigaci použijeme normálně
+`Navigator.pushNamed(context, route_name);`
+
+### Editační obrazovka ###
+
+Jestliže potřebujete editovat novou nebo existující položku ve zvláštní obrazovce,
+dá se postupovat takto:
+
+* Uděláme nový state object, který chceme editovat (buď nový, nebo kopii existujícího, jež editujeme). Ten state object je immutable.
+* Uděláme `StateHolder` pro tento nový state object. (`StateHolder` je vlastně `ChangeNotifier`).
+* Používáme `provider`. Takže editační obrazovka bude volat `context.watch<StateHolder<ItemState>>()` a tím dostane holder editovaného objektu.
+
+Ukázka je v [lib/src/screen/home_screen.dart]() v obsluze tlačítka *editNewItem*, která vytvoří nový item 
+a edituje v [lib/src/screen/edit_item_screen.dart]().
+
 
 ## Lokalizace ##
 

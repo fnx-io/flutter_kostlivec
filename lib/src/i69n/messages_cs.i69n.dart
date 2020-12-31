@@ -37,6 +37,10 @@ String _cardinal(int count,
 class Messages_cs extends Messages {
   const Messages_cs();
   String get pushedMessage => "Čudl jsi zmáčnul tolikrát:";
+  String get editNewItem => "Edituj novou položku";
+  String get SAVE => "ULOŽIT";
+  String get DELETE => "SMAZAT";
+  String get nameTitle => "Jméno";
   Object operator [](String key) {
     var index = key.indexOf('.');
     if (index > 0) {
@@ -46,6 +50,14 @@ class Messages_cs extends Messages {
     switch (key) {
       case 'pushedMessage':
         return pushedMessage;
+      case 'editNewItem':
+        return editNewItem;
+      case 'SAVE':
+        return SAVE;
+      case 'DELETE':
+        return DELETE;
+      case 'nameTitle':
+        return nameTitle;
       default:
         return super[key];
     }

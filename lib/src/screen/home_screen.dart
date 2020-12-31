@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_kostlivec/src/screen/edit_item_screen.dart';
 import 'package:flutter_kostlivec/src/service/app_config_service.dart';
 import 'package:flutter_kostlivec/src/state/app_config_state.dart';
+import 'package:flutter_kostlivec/src/state/state_holder.dart';
+import 'package:flutter_kostlivec/src/state/item_state.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -38,7 +43,28 @@ class _HomeScreenState extends State<HomeScreen> {
                 languageButton("en", context),
                 Spacer(),
               ],
-            )
+            ),
+            RaisedButton(
+                child: Text(context.messages.editNewItem),
+                onPressed: () async {
+                  var newItem = new StateHolder(new ItemState((ItemStateBuilder b) => b
+                    ..index = 0
+                    ..name = "Unknown name"));
+                  final String ret = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => ChangeNotifierProvider(
+                        create: (_) => newItem,
+                        child: EditItemScreen(),
+                      ),
+                    ),
+                  );
+                  if ("SAVE" == ret) {
+                    // Editovaná položka je v newItem.state. Můžeme ji někam uložit.
+                    log.info("Item saved:  ${newItem.state.index}/${newItem.state.name}");
+                  }
+                  // DELETE zde nemá smysl
+                }),
           ],
         ),
       ),

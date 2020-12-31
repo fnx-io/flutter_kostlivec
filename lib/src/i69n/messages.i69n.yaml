@@ -1,1 +1,5 @@
 pushedMessage: "You have pushed the button this many times:"
+editNewItem: "Edit a new item"
+SAVE: "SAVE"
+DELETE: "DELETE"
+nameTitle: "Name"
