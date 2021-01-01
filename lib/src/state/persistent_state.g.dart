@@ -23,8 +23,6 @@ class _$PersistentStateSerializer
       'language',
       serializers.serialize(object.language,
           specifiedType: const FullType(String)),
-      'counter',
-      serializers.serialize(object.counter, specifiedType: const FullType(int)),
     ];
 
     return result;
@@ -46,10 +44,6 @@ class _$PersistentStateSerializer
           result.language = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
-        case 'counter':
-          result.counter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
-          break;
       }
     }
 
@@ -60,18 +54,13 @@ class _$PersistentStateSerializer
 class _$PersistentState extends PersistentState {
   @override
   final String language;
-  @override
-  final int counter;
 
   factory _$PersistentState([void Function(PersistentStateBuilder) updates]) =>
       (new PersistentStateBuilder()..update(updates)).build();
 
-  _$PersistentState._({this.language, this.counter}) : super._() {
+  _$PersistentState._({this.language}) : super._() {
     if (language == null) {
       throw new BuiltValueNullFieldError('PersistentState', 'language');
-    }
-    if (counter == null) {
-      throw new BuiltValueNullFieldError('PersistentState', 'counter');
     }
   }
 
@@ -86,21 +75,18 @@ class _$PersistentState extends PersistentState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is PersistentState &&
-        language == other.language &&
-        counter == other.counter;
+    return other is PersistentState && language == other.language;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, language.hashCode), counter.hashCode));
+    return $jf($jc(0, language.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('PersistentState')
-          ..add('language', language)
-          ..add('counter', counter))
+          ..add('language', language))
         .toString();
   }
 }
@@ -113,16 +99,11 @@ class PersistentStateBuilder
   String get language => _$this._language;
   set language(String language) => _$this._language = language;
 
-  int _counter;
-  int get counter => _$this._counter;
-  set counter(int counter) => _$this._counter = counter;
-
   PersistentStateBuilder();
 
   PersistentStateBuilder get _$this {
     if (_$v != null) {
       _language = _$v.language;
-      _counter = _$v.counter;
       _$v = null;
     }
     return this;
@@ -143,8 +124,7 @@ class PersistentStateBuilder
 
   @override
   _$PersistentState build() {
-    final _$result =
-        _$v ?? new _$PersistentState._(language: language, counter: counter);
+    final _$result = _$v ?? new _$PersistentState._(language: language);
     replace(_$result);
     return _$result;
   }

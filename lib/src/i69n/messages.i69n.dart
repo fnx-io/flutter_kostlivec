@@ -37,8 +37,8 @@ class Messages implements i69n.I69nMessageBundle {
   const Messages();
   String get pushedMessage => "You have pushed the button this many times:";
   String get editNewItem => "Edit a new item";
-  String get SAVE => "SAVE";
-  String get DELETE => "DELETE";
+  String get save => "save";
+  String get delete => "delete";
   String get nameTitle => "Name";
   Object operator [](String key) {
     var index = key.indexOf('.');
@@ -51,10 +51,10 @@ class Messages implements i69n.I69nMessageBundle {
         return pushedMessage;
       case 'editNewItem':
         return editNewItem;
-      case 'SAVE':
-        return SAVE;
-      case 'DELETE':
-        return DELETE;
+      case 'save':
+        return save;
+      case 'delete':
+        return delete;
       case 'nameTitle':
         return nameTitle;
       default:

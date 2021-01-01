@@ -2,9 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:ui';
 
-import 'package:flutter_kostlivec/src/app_mode.dart';
-import 'package:flutter_kostlivec/src/service/app_config_service.dart';
-import 'package:flutter_kostlivec/src/state/app_config_state.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_kostlivec/src/build_flavor.dart';
+import 'package:flutter_kostlivec/src/service/config_service.dart';
+import 'package:flutter_kostlivec/src/state/config_state.dart';
 import 'package:flutter_kostlivec/src/state/persistent_state.dart';
 import 'package:flutter_kostlivec/src/state/serializers.dart';
 import 'package:flutter_kostlivec/src/state/state_holder.dart';
@@ -20,8 +21,19 @@ import 'package:path_provider/path_provider.dart';
 ///
 /// Stav se automaticky uklada pri zapauzovani aplikace a nacita se pri startu.
 ///
-class PersistenceService {
-  StateHolder<AppConfigState> get appConfig => getMyStateHolder<AppConfigState>();
+class PersistenceService extends WidgetsBindingObserver {
+  StateHolder<ConfigState> get config => getMyStateHolder<ConfigState>();
+
+  PersistenceService() {
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.paused) {
+      log.info("App is paused");
+      saveAppState();
+    }
+  }
 
   ///
   /// Uloz aktualni stav aplikace (viz _buildPersistentState)
@@ -48,24 +60,21 @@ class PersistenceService {
   ///
   Future<Directory> getAppDataDirectory() async {
     Directory baseDirectory = await getApplicationDocumentsDirectory();
-    String suffix = appConfig.state.mode == AppMode.PROD ? "prod" : "dev";
+    String suffix = config.state.mode == BuildFlavor.PROD ? "prod" : "dev";
     Directory result = Directory(baseDirectory.path + "/" + suffix + "/");
     await result.create(recursive: true);
     return result;
   }
 
   PersistentState _buildPersistentState() {
-    Locale l = appConfig.state.locale;
-    PersistentState p = PersistentState((b) => b
-      ..language = l.languageCode
-      ..counter = appConfig.state.counter);
+    Locale l = config.state.locale;
+    PersistentState p = PersistentState((b) => b..language = l.languageCode);
     return p;
   }
 
   void _restorePersistentState(PersistentState p) {
-    appConfig.state = appConfig.state.rebuild((b) => b..counter = p.counter ?? 0);
     // Tohle ma nejake konsekvence, napriklad se zmeni Messages, takze to nastavime pres servis:
-    getMy<AppConfigService>().setLocale(p.language);
+    getMy<ConfigService>().setLocale(p.language);
   }
 
   Future _savePersistentState(PersistentState s) async {

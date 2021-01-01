@@ -1,35 +1,25 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter_kostlivec/src/app_mode.dart';
+import 'package:flutter_kostlivec/src/build_flavor.dart';
 import 'package:flutter_kostlivec/src/i69n/locales.dart' as locales;
 import 'package:flutter_kostlivec/src/i69n/messages.i69n.dart';
-import 'package:flutter_kostlivec/src/state/app_config_state.dart';
+import 'package:flutter_kostlivec/src/state/config_state.dart';
 import 'package:flutter_kostlivec/src/state/state_holder.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 
 ///
-/// Metody pro manipulaci s AppConfigState. Až přidáš další stav, asi budeš chtít
+/// Metody pro manipulaci s ConfigState. Až přidáš další stav, asi budeš chtít
 /// přidat i další service.
 ///
 /// Servisní metody by asi většinou neměly vracet data, data by se měla objevit ve stavovém objektu.
 ///
 ///
-class AppConfigService {
-  StateHolder<AppConfigState> get holder => getMy<StateHolder<AppConfigState>>();
+class ConfigService {
+  StateHolder<ConfigState> get holder => getMy<StateHolder<ConfigState>>();
 
-  AppConfigState prepareDefaultState(AppMode mode) {
-    return AppConfigState((AppConfigStateBuilder b) => b
+  ConfigState prepareDefaultState(BuildFlavor mode) {
+    return ConfigState((ConfigStateBuilder b) => b
       ..locale = locales.detectLocale()
-      ..counter = 1
       ..mode = mode);
-  }
-
-  ///
-  /// Demo metoda - zvedni pocitadlo.
-  ///
-  void incrementCounter() {
-    holder.state = holder.state.rebuild((AppConfigStateBuilder b) {
-      b.counter = b.counter + 1;
-    });
   }
 
   ///
@@ -37,7 +27,7 @@ class AppConfigService {
   ///
   void setLocale(String lang) {
     Locale locale = locales.findNearestLocale(Locale(lang));
-    holder.state = holder.state.rebuild((AppConfigStateBuilder b) {
+    holder.state = holder.state.rebuild((ConfigStateBuilder b) {
       b.locale = locale;
     });
     log.info("Messages changed to $locale");
