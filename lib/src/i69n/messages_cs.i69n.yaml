@@ -1,5 +1,13 @@
 pushedMessage: "Čudl jsi zmáčnul tolikrát:"
 editNewItem: "Edituj novou položku"
+startWizard: "Průvodce"
 save: "uložit"
 delete: "smazat"
+next: "další"
+finish: "dokončit"
 nameTitle: "Jméno"
+numberTitle: "Číslo"
+
+wizard:
+  step1title: Krok 1 - Průvodce 
+  step2title: Krok 2 - Průvodce 

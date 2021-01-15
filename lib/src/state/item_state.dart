@@ -12,6 +12,8 @@ abstract class ItemState implements Built<ItemState, ItemStateBuilder> {
   int get index;
 
   String get name;
+  String get info;
+
   ItemState._();
   factory ItemState([void Function(ItemStateBuilder) updates]) = _$ItemState;
 }
