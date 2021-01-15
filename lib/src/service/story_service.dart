@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 class StoryService {
   /// Ukazka otevreni editace
   /// Pokud delame novy stateToEdit, volajici vytvoril default
-  /// Pokud editujeme, tak by mel volajici vytvorit kopii, a tu editovat
+  /// Pokud editujeme, tak sem volajici posle existujici stateToEdit. V datech aplikace se nezmeni, protoze StateHolder
   Future startItemEdit(BuildContext context, ItemState stateToEdit) async {
     var itemStateHolder = new StateHolder(stateToEdit);
 
@@ -41,7 +41,7 @@ class StoryService {
 
   // Ukazka vicekrokoveho wizarda
   /// Pokud delame novy stateToEdit, volajici vytvoril default
-  /// Pokud editujeme, tak by mel volajici vytvorit kopii, a tu editovat
+  /// Pokud editujeme, tak sem volajici posle existujici stateToEdit. V datech aplikace se nezmeni, protoze StateHolder
   ///
   /// Jestli se chcete wizarda zbavit, smazte soubory wizard[12]_screen.dart,
   /// funkci startWizard, a volani startWizard v home_screen.
