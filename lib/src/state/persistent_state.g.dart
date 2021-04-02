@@ -6,11 +6,9 @@ part of 'persistent_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<PersistentState> _$persistentStateSerializer =
-    new _$PersistentStateSerializer();
+Serializer<PersistentState> _$persistentStateSerializer = new _$PersistentStateSerializer();
 
-class _$PersistentStateSerializer
-    implements StructuredSerializer<PersistentState> {
+class _$PersistentStateSerializer implements StructuredSerializer<PersistentState> {
   @override
   final Iterable<Type> types = const [PersistentState, _$PersistentState];
   @override
@@ -21,16 +19,14 @@ class _$PersistentStateSerializer
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'language',
-      serializers.serialize(object.language,
-          specifiedType: const FullType(String)),
+      serializers.serialize(object.language, specifiedType: const FullType(String)),
     ];
 
     return result;
   }
 
   @override
-  PersistentState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+  PersistentState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new PersistentStateBuilder();
 
@@ -41,8 +37,7 @@ class _$PersistentStateSerializer
       final dynamic value = iterator.current;
       switch (key) {
         case 'language':
-          result.language = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.language = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -65,12 +60,10 @@ class _$PersistentState extends PersistentState {
   }
 
   @override
-  PersistentState rebuild(void Function(PersistentStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+  PersistentState rebuild(void Function(PersistentStateBuilder) updates) => (toBuilder()..update(updates)).build();
 
   @override
-  PersistentStateBuilder toBuilder() =>
-      new PersistentStateBuilder()..replace(this);
+  PersistentStateBuilder toBuilder() => new PersistentStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -85,14 +78,11 @@ class _$PersistentState extends PersistentState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('PersistentState')
-          ..add('language', language))
-        .toString();
+    return (newBuiltValueToStringHelper('PersistentState')..add('language', language)).toString();
   }
 }
 
-class PersistentStateBuilder
-    implements Builder<PersistentState, PersistentStateBuilder> {
+class PersistentStateBuilder implements Builder<PersistentState, PersistentStateBuilder> {
   _$PersistentState _$v;
 
   String _language;

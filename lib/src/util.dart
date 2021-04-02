@@ -1,4 +1,3 @@
-import 'package:built_value/built_value.dart';
 import 'package:flutter/widgets.dart' show BuildContext;
 import 'package:flutter_kostlivec/src/i69n/messages.i69n.dart';
 import 'package:flutter_kostlivec/src/state/state_holder.dart';
@@ -9,13 +8,18 @@ import 'package:provider/provider.dart';
 final getMy = GetIt.instance.get;
 final getMyAsync = GetIt.instance.getAsync;
 
+///
+/// Pokud potrebuji zmenit stav, musim to udelat vymenou za novou instanci ve StateHolderu.
+/// Pokud se jedna o globalni stav, je zaregistrovany v GetIt a muzu ho ziskat tam.
+///
 StateHolder<STATE> getMyStateHolder<STATE>() => GetIt.instance.get<StateHolder<STATE>>();
 
 ///
-/// Umozni nacist state holder - pouzivejte, kdyz potrebujete vymenit *State objekt za novou instanci.
+/// Pokud potrebuji zmenit stav, musim to udelat vymenou za novou instanci ve StateHolderu.
+/// Jedna z moznosti jak ho ziskat, je pres provider, touto metodou.
 ///
 extension ReadContextStateHolder on BuildContext {
-  StateHolder<T> getStateHolder<T extends Built<T, Builder<T, dynamic>>>() {
+  StateHolder<T> getStateHolder<T>() {
     return Provider.of<StateHolder<T>>(this, listen: false);
   }
 }
@@ -24,7 +28,7 @@ extension ReadContextStateHolder on BuildContext {
 /// Umozni ziskat pozadovany *State objekt, ale build context NEbude notifikovan o zmene.
 ///
 extension ReadContextState on BuildContext {
-  T readState<T extends Built<T, Builder<T, dynamic>>>() {
+  T readState<T>() {
     return Provider.of<StateHolder<T>>(this, listen: false).state;
   }
 }
@@ -33,7 +37,7 @@ extension ReadContextState on BuildContext {
 /// Umozni ziskat pozadovany *State objekt, a build context BUDE notifikovan o zmene, lze vesmes pouzit pouze uvnitr build metod, nikoliv napr. v event handlerech apod.
 ///
 extension WatchContextState on BuildContext {
-  T watchState<T extends Built<T, Builder<T, dynamic>>>() {
+  T watchState<T>() {
     return this.watch<StateHolder<T>>().state;
   }
 }

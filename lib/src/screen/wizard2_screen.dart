@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-
 import 'package:flutter_kostlivec/src/i69n/messages.i69n.dart';
 import 'package:flutter_kostlivec/src/service/story_service.dart';
 import 'package:flutter_kostlivec/src/state/item_state.dart';

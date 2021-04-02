@@ -41,16 +41,13 @@ class _$ItemStateSerializer implements StructuredSerializer<ItemState> {
       final dynamic value = iterator.current;
       switch (key) {
         case 'index':
-          result.index = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.index = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
           break;
         case 'name':
-          result.name = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.name = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
         case 'info':
-          result.info = serializers.deserialize(value,
-              specifiedType: const FullType(String)) as String;
+          result.info = serializers.deserialize(value, specifiedType: const FullType(String)) as String;
           break;
       }
     }
@@ -67,8 +64,7 @@ class _$ItemState extends ItemState {
   @override
   final String info;
 
-  factory _$ItemState([void Function(ItemStateBuilder) updates]) =>
-      (new ItemStateBuilder()..update(updates)).build();
+  factory _$ItemState([void Function(ItemStateBuilder) updates]) => (new ItemStateBuilder()..update(updates)).build();
 
   _$ItemState._({this.index, this.name, this.info}) : super._() {
     if (index == null) {
@@ -83,8 +79,7 @@ class _$ItemState extends ItemState {
   }
 
   @override
-  ItemState rebuild(void Function(ItemStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+  ItemState rebuild(void Function(ItemStateBuilder) updates) => (toBuilder()..update(updates)).build();
 
   @override
   ItemStateBuilder toBuilder() => new ItemStateBuilder()..replace(this);
@@ -92,10 +87,7 @@ class _$ItemState extends ItemState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ItemState &&
-        index == other.index &&
-        name == other.name &&
-        info == other.info;
+    return other is ItemState && index == other.index && name == other.name && info == other.info;
   }
 
   @override
@@ -105,10 +97,7 @@ class _$ItemState extends ItemState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ItemState')
-          ..add('index', index)
-          ..add('name', name)
-          ..add('info', info))
+    return (newBuiltValueToStringHelper('ItemState')..add('index', index)..add('name', name)..add('info', info))
         .toString();
   }
 }
@@ -155,8 +144,7 @@ class ItemStateBuilder implements Builder<ItemState, ItemStateBuilder> {
 
   @override
   _$ItemState build() {
-    final _$result =
-        _$v ?? new _$ItemState._(index: index, name: name, info: info);
+    final _$result = _$v ?? new _$ItemState._(index: index, name: name, info: info);
     replace(_$result);
     return _$result;
   }

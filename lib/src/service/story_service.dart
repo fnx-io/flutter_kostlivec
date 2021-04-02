@@ -5,8 +5,6 @@ import 'package:flutter_kostlivec/src/screen/wizard1_screen.dart';
 import 'package:flutter_kostlivec/src/state/item_state.dart';
 import 'package:flutter_kostlivec/src/state/state_holder.dart';
 import 'package:flutter_kostlivec/src/util.dart';
-import 'package:get_it/get_it.dart';
-import 'package:provider/provider.dart';
 
 ///
 /// Tady zacinaji vetsi use-cases, kterym se nyni s oblibou rika stories.
@@ -18,10 +16,7 @@ class StoryService {
   Future startItemEdit(BuildContext context, ItemState stateToEdit) async {
     var itemStateHolder = new StateHolder(stateToEdit);
 
-    var editScreen = ChangeNotifierProvider(
-      create: (_) => itemStateHolder,
-      child: EditItemScreen(),
-    );
+    var editScreen = itemStateHolder.provideFor(EditItemScreen());
 
     final StoryEnding ending = await Navigator.push(
       context,
@@ -48,11 +43,8 @@ class StoryService {
   Future startWizard(BuildContext context, ItemState stateToEdit) async {
     var itemStateHolder = new StateHolder(stateToEdit);
 
-    // Pouzivame ChangeNotifierProvider.value, protoze ta hodnota bude pouzita do dalsich provideru wizarda
-    var wizardScreen1 = ChangeNotifierProvider.value(
-      value: itemStateHolder,
-      child: Wizard1Screen(),
-    );
+    // Poskyteme obrazovce provider naseho docasneho state holderu, protoze ta hodnota bude pouzita do dalsich provideru wizarda
+    var wizardScreen1 = itemStateHolder.provideFor(Wizard1Screen());
 
     final StoryEnding ending = await Navigator.push(
       context,

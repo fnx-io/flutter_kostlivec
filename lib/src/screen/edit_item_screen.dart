@@ -41,13 +41,13 @@ class _EditItemState extends State<EditItemScreen> {
       appBar: AppBar(
         title: Text("${item.index} ${item.name}"),
         actions: <Widget>[
-          FlatButton(
+          TextButton(
             child: Text(m.delete.toUpperCase(), style: TextStyle(color: Colors.white)),
             onPressed: () {
               _delete(context);
             },
           ),
-          FlatButton(
+          TextButton(
             child: Text(m.save.toUpperCase(), style: TextStyle(color: Colors.white)),
             onPressed: () {
               _save(context);

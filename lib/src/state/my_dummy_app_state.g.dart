@@ -6,11 +6,9 @@ part of 'my_dummy_app_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<MyDummyAppState> _$myDummyAppStateSerializer =
-    new _$MyDummyAppStateSerializer();
+Serializer<MyDummyAppState> _$myDummyAppStateSerializer = new _$MyDummyAppStateSerializer();
 
-class _$MyDummyAppStateSerializer
-    implements StructuredSerializer<MyDummyAppState> {
+class _$MyDummyAppStateSerializer implements StructuredSerializer<MyDummyAppState> {
   @override
   final Iterable<Type> types = const [MyDummyAppState, _$MyDummyAppState];
   @override
@@ -28,8 +26,7 @@ class _$MyDummyAppStateSerializer
   }
 
   @override
-  MyDummyAppState deserialize(
-      Serializers serializers, Iterable<Object> serialized,
+  MyDummyAppState deserialize(Serializers serializers, Iterable<Object> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new MyDummyAppStateBuilder();
 
@@ -40,8 +37,7 @@ class _$MyDummyAppStateSerializer
       final dynamic value = iterator.current;
       switch (key) {
         case 'counter':
-          result.counter = serializers.deserialize(value,
-              specifiedType: const FullType(int)) as int;
+          result.counter = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
           break;
       }
     }
@@ -64,12 +60,10 @@ class _$MyDummyAppState extends MyDummyAppState {
   }
 
   @override
-  MyDummyAppState rebuild(void Function(MyDummyAppStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+  MyDummyAppState rebuild(void Function(MyDummyAppStateBuilder) updates) => (toBuilder()..update(updates)).build();
 
   @override
-  MyDummyAppStateBuilder toBuilder() =>
-      new MyDummyAppStateBuilder()..replace(this);
+  MyDummyAppStateBuilder toBuilder() => new MyDummyAppStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -84,14 +78,11 @@ class _$MyDummyAppState extends MyDummyAppState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('MyDummyAppState')
-          ..add('counter', counter))
-        .toString();
+    return (newBuiltValueToStringHelper('MyDummyAppState')..add('counter', counter)).toString();
   }
 }
 
-class MyDummyAppStateBuilder
-    implements Builder<MyDummyAppState, MyDummyAppStateBuilder> {
+class MyDummyAppStateBuilder implements Builder<MyDummyAppState, MyDummyAppStateBuilder> {
   _$MyDummyAppState _$v;
 
   int _counter;

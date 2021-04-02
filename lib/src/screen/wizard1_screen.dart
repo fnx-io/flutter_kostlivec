@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
-import 'package:provider/provider.dart';
-
 import 'package:flutter_kostlivec/src/i69n/messages.i69n.dart';
-import 'package:flutter_kostlivec/src/service/story_service.dart';
 import 'package:flutter_kostlivec/src/screen/wizard2_screen.dart';
+import 'package:flutter_kostlivec/src/service/story_service.dart';
 import 'package:flutter_kostlivec/src/state/item_state.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 
@@ -73,12 +71,10 @@ class _Wizard1State extends State<Wizard1Screen> {
     final StoryEnding ret = await Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => ChangeNotifierProvider.value(
-          value: holder,
-          child: Wizard2Screen(),
-        ),
+        builder: (context) => holder.provideFor(Wizard2Screen()),
       ),
     );
+
     if (ret != null) {
       Navigator.pop(context, ret);
     }

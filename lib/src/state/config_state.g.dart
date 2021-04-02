@@ -19,11 +19,9 @@ class _$ConfigStateSerializer implements StructuredSerializer<ConfigState> {
       {FullType specifiedType = FullType.unspecified}) {
     final result = <Object>[
       'mode',
-      serializers.serialize(object.mode,
-          specifiedType: const FullType(BuildFlavor)),
+      serializers.serialize(object.mode, specifiedType: const FullType(BuildFlavor)),
       'locale',
-      serializers.serialize(object.locale,
-          specifiedType: const FullType(Locale)),
+      serializers.serialize(object.locale, specifiedType: const FullType(Locale)),
     ];
 
     return result;
@@ -41,12 +39,10 @@ class _$ConfigStateSerializer implements StructuredSerializer<ConfigState> {
       final dynamic value = iterator.current;
       switch (key) {
         case 'mode':
-          result.mode = serializers.deserialize(value,
-              specifiedType: const FullType(BuildFlavor)) as BuildFlavor;
+          result.mode = serializers.deserialize(value, specifiedType: const FullType(BuildFlavor)) as BuildFlavor;
           break;
         case 'locale':
-          result.locale = serializers.deserialize(value,
-              specifiedType: const FullType(Locale)) as Locale;
+          result.locale = serializers.deserialize(value, specifiedType: const FullType(Locale)) as Locale;
           break;
       }
     }
@@ -74,8 +70,7 @@ class _$ConfigState extends ConfigState {
   }
 
   @override
-  ConfigState rebuild(void Function(ConfigStateBuilder) updates) =>
-      (toBuilder()..update(updates)).build();
+  ConfigState rebuild(void Function(ConfigStateBuilder) updates) => (toBuilder()..update(updates)).build();
 
   @override
   ConfigStateBuilder toBuilder() => new ConfigStateBuilder()..replace(this);
@@ -93,10 +88,7 @@ class _$ConfigState extends ConfigState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('ConfigState')
-          ..add('mode', mode)
-          ..add('locale', locale))
-        .toString();
+    return (newBuiltValueToStringHelper('ConfigState')..add('mode', mode)..add('locale', locale)).toString();
   }
 }
 

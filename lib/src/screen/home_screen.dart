@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget languageButton(String langCode, BuildContext context) {
     String curLang = context.watchState<ConfigState>().locale.languageCode;
-    return FlatButton(
+    return TextButton(
       child: Text(langCode),
       onPressed: langCode == curLang ? null : () => getMy<ConfigService>().setLocale(langCode),
     );
