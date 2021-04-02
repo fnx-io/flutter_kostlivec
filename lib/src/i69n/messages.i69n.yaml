@@ -1,5 +1,13 @@
 pushedMessage: "You have pushed the button this many times:"
 editNewItem: "Edit a new item"
+startWizard: "Wizard"
 save: "save"
 delete: "delete"
+next: "next"
+finish: "finish"
 nameTitle: "Name"
+numberTitle: "Number"
+
+wizard:
+  step1title: Step 1 - Wizard
+  step2title: Step 2 - Wizard

@@ -22,6 +22,8 @@ class _$ItemStateSerializer implements StructuredSerializer<ItemState> {
       serializers.serialize(object.index, specifiedType: const FullType(int)),
       'name',
       serializers.serialize(object.name, specifiedType: const FullType(String)),
+      'info',
+      serializers.serialize(object.info, specifiedType: const FullType(String)),
     ];
 
     return result;
@@ -46,6 +48,10 @@ class _$ItemStateSerializer implements StructuredSerializer<ItemState> {
           result.name = serializers.deserialize(value,
               specifiedType: const FullType(String)) as String;
           break;
+        case 'info':
+          result.info = serializers.deserialize(value,
+              specifiedType: const FullType(String)) as String;
+          break;
       }
     }
 
@@ -58,16 +64,21 @@ class _$ItemState extends ItemState {
   final int index;
   @override
   final String name;
+  @override
+  final String info;
 
   factory _$ItemState([void Function(ItemStateBuilder) updates]) =>
       (new ItemStateBuilder()..update(updates)).build();
 
-  _$ItemState._({this.index, this.name}) : super._() {
+  _$ItemState._({this.index, this.name, this.info}) : super._() {
     if (index == null) {
       throw new BuiltValueNullFieldError('ItemState', 'index');
     }
     if (name == null) {
       throw new BuiltValueNullFieldError('ItemState', 'name');
+    }
+    if (info == null) {
+      throw new BuiltValueNullFieldError('ItemState', 'info');
     }
   }
 
@@ -81,19 +92,23 @@ class _$ItemState extends ItemState {
   @override
   bool operator ==(Object other) {
     if (identical(other, this)) return true;
-    return other is ItemState && index == other.index && name == other.name;
+    return other is ItemState &&
+        index == other.index &&
+        name == other.name &&
+        info == other.info;
   }
 
   @override
   int get hashCode {
-    return $jf($jc($jc(0, index.hashCode), name.hashCode));
+    return $jf($jc($jc($jc(0, index.hashCode), name.hashCode), info.hashCode));
   }
 
   @override
   String toString() {
     return (newBuiltValueToStringHelper('ItemState')
           ..add('index', index)
-          ..add('name', name))
+          ..add('name', name)
+          ..add('info', info))
         .toString();
   }
 }
@@ -109,12 +124,17 @@ class ItemStateBuilder implements Builder<ItemState, ItemStateBuilder> {
   String get name => _$this._name;
   set name(String name) => _$this._name = name;
 
+  String _info;
+  String get info => _$this._info;
+  set info(String info) => _$this._info = info;
+
   ItemStateBuilder();
 
   ItemStateBuilder get _$this {
     if (_$v != null) {
       _index = _$v.index;
       _name = _$v.name;
+      _info = _$v.info;
       _$v = null;
     }
     return this;
@@ -135,7 +155,8 @@ class ItemStateBuilder implements Builder<ItemState, ItemStateBuilder> {
 
   @override
   _$ItemState build() {
-    final _$result = _$v ?? new _$ItemState._(index: index, name: name);
+    final _$result =
+        _$v ?? new _$ItemState._(index: index, name: name, info: info);
     replace(_$result);
     return _$result;
   }
