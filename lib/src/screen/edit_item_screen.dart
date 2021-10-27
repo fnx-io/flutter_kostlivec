@@ -9,7 +9,7 @@ import 'package:flutter_kostlivec/src/util.dart';
 
 class EditItemScreen extends StatefulWidget {
   EditItemScreen({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -18,7 +18,7 @@ class EditItemScreen extends StatefulWidget {
 
 class _EditItemState extends State<EditItemScreen> {
   Messages get m => context.watchMessages;
-  TextEditingController _controller;
+  TextEditingController? _controller;
 
   void initState() {
     super.initState();
@@ -26,15 +26,15 @@ class _EditItemState extends State<EditItemScreen> {
   }
 
   void dispose() {
-    _controller.dispose();
+    _controller!.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     var item = context.watchState<ItemState>();
-    if (_controller.text != item.name) {
-      _controller.value = TextEditingValue(text: item.name);
+    if (_controller!.text != item.name) {
+      _controller!.value = TextEditingValue(text: item.name!);
     }
 
     return Scaffold(

@@ -9,10 +9,10 @@ part 'item_state.g.dart';
 abstract class ItemState implements Built<ItemState, ItemStateBuilder> {
   static Serializer<ItemState> get serializer => _$itemStateSerializer;
 
-  int get index;
+  int? get index;
 
-  String get name;
-  String get info;
+  String? get name;
+  String? get info;
 
   ItemState._();
   factory ItemState([void Function(ItemStateBuilder) updates]) = _$ItemState;

@@ -9,7 +9,7 @@ import 'package:flutter_kostlivec/src/util.dart';
 
 class Wizard2Screen extends StatefulWidget {
   Wizard2Screen({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -33,7 +33,7 @@ class _Wizard2State extends State<Wizard2Screen> {
   Widget build(BuildContext context) {
     var item = context.watchState<ItemState>();
     if (_controller.text != item.info) {
-      _controller.value = TextEditingValue(text: item.info);
+      _controller.value = TextEditingValue(text: item.info!);
     }
 
     return Scaffold(

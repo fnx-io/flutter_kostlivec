@@ -3,6 +3,7 @@ import 'package:flutter_kostlivec/src/app.dart';
 import 'package:flutter_kostlivec/src/build_flavor.dart';
 import 'package:flutter_kostlivec/src/i69n/locales.dart';
 import 'package:flutter_kostlivec/src/i69n/messages.i69n.dart';
+import 'package:flutter_kostlivec/src/preconditions.dart';
 import 'package:flutter_kostlivec/src/service/config_service.dart';
 import 'package:flutter_kostlivec/src/service/my_dummy_app_service.dart';
 import 'package:flutter_kostlivec/src/service/persistence_service.dart';
@@ -50,6 +51,9 @@ Future<Widget> _composeApp(BuildFlavor mode, Widget appWidget) async {
   _log.info("Loading previous persistent state ...");
   await getMy<PersistenceService>().loadPreviousState();
 
+  _log.info("Registering preconditions ...");
+  registerAndVerifyAllPreconditions();
+
   _log.info("Preparing providers ...");
   return MultiProvider(
     providers: [
@@ -71,7 +75,7 @@ Future _configureInitialState(BuildFlavor mode) async {
   GetIt.instance.registerSingleton(StateHolder<MyDummyAppState>(defaultDummyState));
 
   _log.info("... Messages");
-  GetIt.instance.registerSingleton(StateHolder<Messages>(getMessagesByLocale(defaultConfig.locale)));
+  GetIt.instance.registerSingleton(StateHolder<Messages>(getMessagesByLocale(defaultConfig.locale!)));
 }
 
 Future _configureServices() async {

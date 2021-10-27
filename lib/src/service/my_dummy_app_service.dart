@@ -22,7 +22,7 @@ class MyDummyAppService {
   ///
   void incrementCounter() {
     holder.state = holder.state.rebuild((MyDummyAppStateBuilder b) {
-      b.counter = b.counter + 1;
+      b.counter = b.counter! + 1;
     });
   }
 }

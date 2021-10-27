@@ -10,7 +10,7 @@ import 'package:flutter_kostlivec/src/util.dart';
 
 class Wizard1Screen extends StatefulWidget {
   Wizard1Screen({
-    Key key,
+    Key? key,
   }) : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class _Wizard1State extends State<Wizard1Screen> {
   Widget build(BuildContext context) {
     var item = context.watchState<ItemState>();
     if (_controller.text != item.name) {
-      _controller.value = TextEditingValue(text: item.name);
+      _controller.value = TextEditingValue(text: item.name!);
     }
 
     return Scaffold(
@@ -68,7 +68,7 @@ class _Wizard1State extends State<Wizard1Screen> {
   void _next() async {
     var holder = context.getStateHolder<ItemState>();
 
-    final StoryEnding ret = await Navigator.push(
+    final StoryEnding? ret = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => holder.provideFor(Wizard2Screen()),

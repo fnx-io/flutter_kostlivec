@@ -5,8 +5,8 @@ import 'package:get_it/get_it.dart';
 import 'package:logging/logging.dart';
 import 'package:provider/provider.dart';
 
-final getMy = GetIt.instance.get;
-final getMyAsync = GetIt.instance.getAsync;
+final Function<T extends Object>({String? instanceName, dynamic param1, dynamic param2}) getMy = GetIt.instance.get;
+Future Function<T extends Object>({String instanceName, dynamic param1, dynamic param2}) getMyAsync = GetIt.instance.getAsync;
 
 ///
 /// Pokud potrebuji zmenit stav, musim to udelat vymenou za novou instanci ve StateHolderu.

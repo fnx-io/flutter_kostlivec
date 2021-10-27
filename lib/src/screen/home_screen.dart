@@ -8,9 +8,9 @@ import 'package:flutter_kostlivec/src/state/my_dummy_app_state.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key key, this.title}) : super(key: key);
+  HomeScreen({Key? key, this.title}) : super(key: key);
 
-  final String title;
+  final String? title;
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -23,7 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title!),
       ),
       body: Center(
         child: Column(
@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget languageButton(String langCode, BuildContext context) {
-    String curLang = context.watchState<ConfigState>().locale.languageCode;
+    String curLang = context.watchState<ConfigState>().locale!.languageCode;
     return TextButton(
       child: Text(langCode),
       onPressed: langCode == curLang ? null : () => getMy<ConfigService>().setLocale(langCode),

@@ -7,7 +7,7 @@ import 'package:flutter_kostlivec/src/util.dart';
 class DebugWidget extends StatelessWidget {
   final Widget child;
 
-  DebugWidget({@required this.child});
+  DebugWidget({required this.child});
 
   @override
   Widget build(BuildContext context) {

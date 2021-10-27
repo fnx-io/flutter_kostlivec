@@ -11,9 +11,9 @@ part 'config_state.g.dart';
 abstract class ConfigState implements Built<ConfigState, ConfigStateBuilder> {
   static Serializer<ConfigState> get serializer => _$configStateSerializer;
 
-  BuildFlavor get mode;
+  BuildFlavor? get mode;
 
-  Locale get locale;
+  Locale? get locale;
 
   ConfigState._();
   factory ConfigState([void Function(ConfigStateBuilder) updates]) = _$ConfigState;

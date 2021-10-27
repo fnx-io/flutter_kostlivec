@@ -25,7 +25,7 @@ class PersistenceService extends WidgetsBindingObserver {
   StateHolder<ConfigState> get config => getMyStateHolder<ConfigState>();
 
   PersistenceService() {
-    WidgetsBinding.instance.addObserver(this);
+    WidgetsBinding.instance!.addObserver(this);
   }
 
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -50,7 +50,7 @@ class PersistenceService extends WidgetsBindingObserver {
     File state = await _getStateJsonFile();
     if (await state.exists()) {
       String json = await state.readAsString();
-      PersistentState p = serializers.deserialize(jsonDecode(json));
+      PersistentState p = serializers.deserialize(jsonDecode(json)) as PersistentState;
       _restorePersistentState(p);
     }
   }
@@ -67,18 +67,18 @@ class PersistenceService extends WidgetsBindingObserver {
   }
 
   PersistentState _buildPersistentState() {
-    Locale l = config.state.locale;
-    PersistentState p = PersistentState((b) => b..language = l.languageCode);
+    Locale? l = config.state.locale;
+    PersistentState p = PersistentState((b) => b..language = l!.languageCode);
     return p;
   }
 
   void _restorePersistentState(PersistentState p) {
     // Tohle ma nejake konsekvence, napriklad se zmeni Messages, takze to nastavime pres servis:
-    getMy<ConfigService>().setLocale(p.language);
+    getMy<ConfigService>().setLocale(p.language!);
   }
 
   Future _savePersistentState(PersistentState s) async {
-    Object serialized = serializers.serialize(s);
+    Object? serialized = serializers.serialize(s);
     String json = jsonEncode(serialized);
 
     File state = await _getStateJsonFile();

@@ -6,7 +6,7 @@ part 'persistent_state.g.dart';
 abstract class PersistentState implements Built<PersistentState, PersistentStateBuilder> {
   static Serializer<PersistentState> get serializer => _$persistentStateSerializer;
 
-  String get language;
+  String? get language;
 
   PersistentState._();
   factory PersistentState([void Function(PersistentStateBuilder) updates]) = _$PersistentState;

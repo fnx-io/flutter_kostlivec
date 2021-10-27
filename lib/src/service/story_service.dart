@@ -18,7 +18,7 @@ class StoryService {
 
     var editScreen = itemStateHolder.provideFor(EditItemScreen());
 
-    final StoryEnding ending = await Navigator.push(
+    final StoryEnding? ending = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => editScreen),
     );
@@ -46,7 +46,7 @@ class StoryService {
     // Poskyteme obrazovce provider naseho docasneho state holderu, protoze ta hodnota bude pouzita do dalsich provideru wizarda
     var wizardScreen1 = itemStateHolder.provideFor(Wizard1Screen());
 
-    final StoryEnding ending = await Navigator.push(
+    final StoryEnding? ending = await Navigator.push(
       context,
       MaterialPageRoute(builder: (context) => wizardScreen1),
     );

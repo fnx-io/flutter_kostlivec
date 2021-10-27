@@ -10,7 +10,7 @@ abstract class MyDummyAppState implements Built<MyDummyAppState, MyDummyAppState
   static Serializer<MyDummyAppState> get serializer => _$myDummyAppStateSerializer;
 
   // Can never be null.
-  int get counter;
+  int? get counter;
 
   MyDummyAppState._();
   factory MyDummyAppState([void Function(MyDummyAppStateBuilder) updates]) = _$MyDummyAppState;

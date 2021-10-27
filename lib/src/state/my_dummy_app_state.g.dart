@@ -6,27 +6,33 @@ part of 'my_dummy_app_state.dart';
 // BuiltValueGenerator
 // **************************************************************************
 
-Serializer<MyDummyAppState> _$myDummyAppStateSerializer = new _$MyDummyAppStateSerializer();
+Serializer<MyDummyAppState> _$myDummyAppStateSerializer =
+    new _$MyDummyAppStateSerializer();
 
-class _$MyDummyAppStateSerializer implements StructuredSerializer<MyDummyAppState> {
+class _$MyDummyAppStateSerializer
+    implements StructuredSerializer<MyDummyAppState> {
   @override
   final Iterable<Type> types = const [MyDummyAppState, _$MyDummyAppState];
   @override
   final String wireName = 'MyDummyAppState';
 
   @override
-  Iterable<Object> serialize(Serializers serializers, MyDummyAppState object,
+  Iterable<Object?> serialize(Serializers serializers, MyDummyAppState object,
       {FullType specifiedType = FullType.unspecified}) {
-    final result = <Object>[
-      'counter',
-      serializers.serialize(object.counter, specifiedType: const FullType(int)),
-    ];
-
+    final result = <Object?>[];
+    Object? value;
+    value = object.counter;
+    if (value != null) {
+      result
+        ..add('counter')
+        ..add(serializers.serialize(value, specifiedType: const FullType(int)));
+    }
     return result;
   }
 
   @override
-  MyDummyAppState deserialize(Serializers serializers, Iterable<Object> serialized,
+  MyDummyAppState deserialize(
+      Serializers serializers, Iterable<Object?> serialized,
       {FullType specifiedType = FullType.unspecified}) {
     final result = new MyDummyAppStateBuilder();
 
@@ -34,10 +40,11 @@ class _$MyDummyAppStateSerializer implements StructuredSerializer<MyDummyAppStat
     while (iterator.moveNext()) {
       final key = iterator.current as String;
       iterator.moveNext();
-      final dynamic value = iterator.current;
+      final Object? value = iterator.current;
       switch (key) {
         case 'counter':
-          result.counter = serializers.deserialize(value, specifiedType: const FullType(int)) as int;
+          result.counter = serializers.deserialize(value,
+              specifiedType: const FullType(int)) as int?;
           break;
       }
     }
@@ -48,22 +55,20 @@ class _$MyDummyAppStateSerializer implements StructuredSerializer<MyDummyAppStat
 
 class _$MyDummyAppState extends MyDummyAppState {
   @override
-  final int counter;
+  final int? counter;
 
-  factory _$MyDummyAppState([void Function(MyDummyAppStateBuilder) updates]) =>
+  factory _$MyDummyAppState([void Function(MyDummyAppStateBuilder)? updates]) =>
       (new MyDummyAppStateBuilder()..update(updates)).build();
 
-  _$MyDummyAppState._({this.counter}) : super._() {
-    if (counter == null) {
-      throw new BuiltValueNullFieldError('MyDummyAppState', 'counter');
-    }
-  }
+  _$MyDummyAppState._({this.counter}) : super._();
 
   @override
-  MyDummyAppState rebuild(void Function(MyDummyAppStateBuilder) updates) => (toBuilder()..update(updates)).build();
+  MyDummyAppState rebuild(void Function(MyDummyAppStateBuilder) updates) =>
+      (toBuilder()..update(updates)).build();
 
   @override
-  MyDummyAppStateBuilder toBuilder() => new MyDummyAppStateBuilder()..replace(this);
+  MyDummyAppStateBuilder toBuilder() =>
+      new MyDummyAppStateBuilder()..replace(this);
 
   @override
   bool operator ==(Object other) {
@@ -78,22 +83,26 @@ class _$MyDummyAppState extends MyDummyAppState {
 
   @override
   String toString() {
-    return (newBuiltValueToStringHelper('MyDummyAppState')..add('counter', counter)).toString();
+    return (newBuiltValueToStringHelper('MyDummyAppState')
+          ..add('counter', counter))
+        .toString();
   }
 }
 
-class MyDummyAppStateBuilder implements Builder<MyDummyAppState, MyDummyAppStateBuilder> {
-  _$MyDummyAppState _$v;
+class MyDummyAppStateBuilder
+    implements Builder<MyDummyAppState, MyDummyAppStateBuilder> {
+  _$MyDummyAppState? _$v;
 
-  int _counter;
-  int get counter => _$this._counter;
-  set counter(int counter) => _$this._counter = counter;
+  int? _counter;
+  int? get counter => _$this._counter;
+  set counter(int? counter) => _$this._counter = counter;
 
   MyDummyAppStateBuilder();
 
   MyDummyAppStateBuilder get _$this {
-    if (_$v != null) {
-      _counter = _$v.counter;
+    final $v = _$v;
+    if ($v != null) {
+      _counter = $v.counter;
       _$v = null;
     }
     return this;
@@ -101,14 +110,12 @@ class MyDummyAppStateBuilder implements Builder<MyDummyAppState, MyDummyAppState
 
   @override
   void replace(MyDummyAppState other) {
-    if (other == null) {
-      throw new ArgumentError.notNull('other');
-    }
+    ArgumentError.checkNotNull(other, 'other');
     _$v = other as _$MyDummyAppState;
   }
 
   @override
-  void update(void Function(MyDummyAppStateBuilder) updates) {
+  void update(void Function(MyDummyAppStateBuilder)? updates) {
     if (updates != null) updates(this);
   }
 
@@ -120,4 +127,4 @@ class MyDummyAppStateBuilder implements Builder<MyDummyAppState, MyDummyAppState
   }
 }
 
-// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
+// ignore_for_file: always_put_control_body_on_new_line,always_specify_types,annotate_overrides,avoid_annotating_with_dynamic,avoid_as,avoid_catches_without_on_clauses,avoid_returning_this,deprecated_member_use_from_same_package,lines_longer_than_80_chars,omit_local_variable_types,prefer_expression_function_bodies,sort_constructors_first,test_types_in_equals,unnecessary_const,unnecessary_new
