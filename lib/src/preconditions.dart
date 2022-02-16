@@ -7,12 +7,14 @@ import 'package:preconditions/preconditions.dart';
 
 var _log = Logger("Preconditions");
 
-final PreconditionsRepository preconditionsRepository = PreconditionsRepository();
+final PreconditionsRepository preconditionsRepository =
+    PreconditionsRepository();
 final _repo = preconditionsRepository;
 
-String preconditionIdConnected = "connected";
+var preconditionIdConnected = PreconditionId("connected");
 
-bool get preconditionIsOnline => _repo.getPrecondition(preconditionIdConnected)!.status.isSatisfied;
+bool get preconditionIsOnline =>
+    _repo.getPrecondition(preconditionIdConnected)!.status.isSatisfied;
 
 void registerAndVerifyAllPreconditions() {
   _registerOnlinePrecondition();
@@ -22,7 +24,8 @@ void registerAndVerifyAllPreconditions() {
 void _registerOnlinePrecondition() {
   FutureOr<PreconditionStatus> _isOnlineImpl() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult == ConnectivityResult.mobile ||
+        connectivityResult == ConnectivityResult.wifi) {
       return PreconditionStatus.satisfied();
     }
     return PreconditionStatus.unsatisfied();
@@ -30,16 +33,19 @@ void _registerOnlinePrecondition() {
 
   FutureOr<PreconditionStatus> _isConnectedImpl() async {
     // Should be run only when "is online"
-    var connected = (await http.get(Uri.parse("https://www.gstatic.com/generate_204"))).statusCode == 204;
+    var connected =
+        (await http.get(Uri.parse("https://www.gstatic.com/generate_204")))
+                .statusCode ==
+            204;
     return PreconditionStatus.fromBoolean(connected);
   }
 
-  _repo.registerPrecondition("_online", _isOnlineImpl);
+  _repo.registerPrecondition(PreconditionId("_online"), _isOnlineImpl);
 
   _repo.registerPrecondition(
     preconditionIdConnected,
     _isConnectedImpl,
-    dependsOn: ["_online"],
+    dependsOn: [PreconditionId("__online")],
     satisfiedCache: Duration(minutes: 5),
     dependenciesStrategy: DependenciesStrategy.unsatisfiedOnUnsatisfied,
   );
