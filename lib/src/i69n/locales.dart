@@ -12,7 +12,7 @@ Locale _cs = Locale("cs");
 List<Locale> _possibleLocales = [_en, _cs];
 
 Locale detectLocale() {
-  Locale l = WidgetsBinding.instance!.window.locale;
+  Locale l = WidgetsBinding.instance.window.locale;
   return findNearestLocale(l);
 }
 

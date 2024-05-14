@@ -73,7 +73,7 @@ class Messages implements i69n.I69nMessageBundle {
       case 'wizard':
         return wizard;
       default:
-        throw Exception('Message $key doesn\'t exist in $this');
+        return key;
     }
   }
 }
@@ -95,7 +95,7 @@ class WizardMessages implements i69n.I69nMessageBundle {
       case 'step2title':
         return step2title;
       default:
-        throw Exception('Message $key doesn\'t exist in $this');
+        return key;
     }
   }
 }

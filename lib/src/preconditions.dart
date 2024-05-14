@@ -1,56 +1,52 @@
 import 'dart:async';
 
-import 'package:connectivity/connectivity.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:http/http.dart' as http;
 import 'package:logging/logging.dart';
 import 'package:preconditions/preconditions.dart';
 
 var _log = Logger("Preconditions");
 
-final PreconditionsRepository preconditionsRepository =
-    PreconditionsRepository();
+final PreconditionsRepository preconditionsRepository = PreconditionsRepository();
 final _repo = preconditionsRepository;
 
-var preconditionIdConnected = PreconditionId("connected");
+var preconditionIdHasInternet = PreconditionId("hasInternet");
+var _preconditionIdIsConnected = PreconditionId("_connected");
 
-bool get preconditionIsOnline =>
-    _repo.getPrecondition(preconditionIdConnected)!.status.isSatisfied;
+bool get preconditionIsConnected => _repo.getPrecondition(preconditionIdHasInternet)!.status.isSatisfied;
 
 void registerAndVerifyAllPreconditions() {
-  _registerOnlinePrecondition();
+  _registerConnectedPrecondition();
   preconditionsRepository.evaluatePreconditions();
 }
 
-void _registerOnlinePrecondition() {
-  FutureOr<PreconditionStatus> _isOnlineImpl() async {
+void _registerConnectedPrecondition() {
+  FutureOr<PreconditionStatus> _isConnectedImpl() async {
     var connectivityResult = await (Connectivity().checkConnectivity());
-    if (connectivityResult == ConnectivityResult.mobile ||
-        connectivityResult == ConnectivityResult.wifi) {
+    if (connectivityResult == ConnectivityResult.mobile || connectivityResult == ConnectivityResult.wifi) {
       return PreconditionStatus.satisfied();
     }
-    return PreconditionStatus.unsatisfied();
+    return PreconditionStatus.failed();
   }
 
-  FutureOr<PreconditionStatus> _isConnectedImpl() async {
-    // Should be run only when "is online"
-    var connected =
-        (await http.get(Uri.parse("https://www.gstatic.com/generate_204")))
-                .statusCode ==
-            204;
-    return PreconditionStatus.fromBoolean(connected);
+  FutureOr<PreconditionStatus> _hasInternetAccess() async {
+    // Should be run only when "is connected"
+    var hasAccess = (await http.get(Uri.parse("https://www.gstatic.com/generate_204"))).statusCode == 204;
+    return PreconditionStatus.fromBoolean(hasAccess);
   }
 
-  _repo.registerPrecondition(PreconditionId("_online"), _isOnlineImpl);
+  _repo.registerPrecondition(_preconditionIdIsConnected, _isConnectedImpl);
 
   _repo.registerPrecondition(
-    preconditionIdConnected,
-    _isConnectedImpl,
-    dependsOn: [PreconditionId("__online")],
-    satisfiedCache: Duration(minutes: 5),
-    dependenciesStrategy: DependenciesStrategy.unsatisfiedOnUnsatisfied,
+    preconditionIdHasInternet,
+    _hasInternetAccess,
+    dependsOn: [
+      tight(_preconditionIdIsConnected),
+    ],
+    staySatisfiedCacheDuration: Duration(minutes: 5),
   );
 
   Connectivity().onConnectivityChanged.listen((_) {
-    _repo.evaluatePreconditionById(preconditionIdConnected);
+    _repo.evaluatePreconditionById(preconditionIdHasInternet);
   });
 }

@@ -17,9 +17,7 @@ class ConfigService {
   StateHolder<ConfigState> get holder => getMy<StateHolder<ConfigState>>();
 
   ConfigState prepareDefaultState(BuildFlavor mode) {
-    return ConfigState((ConfigStateBuilder b) => b
-      ..locale = locales.detectLocale()
-      ..mode = mode);
+    return ConfigState(locale: locales.detectLocale(), mode: mode);
   }
 
   ///
@@ -27,9 +25,7 @@ class ConfigService {
   ///
   void setLocale(String lang) {
     Locale locale = locales.findNearestLocale(Locale(lang));
-    holder.state = holder.state.rebuild((ConfigStateBuilder b) {
-      b.locale = locale;
-    });
+    holder.state = holder.state.copyWith(locale: locale);
     log.info("Messages changed to $locale");
     getMy<StateHolder<Messages>>().state = locales.getMessagesByLocale(locale);
   }

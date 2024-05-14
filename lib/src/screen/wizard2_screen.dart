@@ -74,6 +74,6 @@ class _Wizard2State extends State<Wizard2Screen> {
 
   void _updateInfo(String newInfo) {
     var holder = context.getStateHolder<ItemState>();
-    holder.state = holder.state.rebuild((b) => b..info = newInfo);
+    holder.state = holder.state.copyWith(info: newInfo);
   }
 }

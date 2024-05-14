@@ -82,6 +82,6 @@ class _Wizard1State extends State<Wizard1Screen> {
 
   void _updateName(String newName) {
     var holder = context.getStateHolder<ItemState>();
-    holder.state = holder.state.rebuild((b) => b..name = newName);
+    holder.state = holder.state.copyWith(name: newName);
   }
 }

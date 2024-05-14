@@ -18,7 +18,7 @@ StateHolder<STATE> getMyStateHolder<STATE>() => GetIt.instance.get<StateHolder<S
 /// Pokud potrebuji zmenit stav, musim to udelat vymenou za novou instanci ve StateHolderu.
 /// Jedna z moznosti jak ho ziskat, je pres provider, touto metodou.
 ///
-extension ReadContextStateHolder on BuildContext {
+extension ReadCotextStateHolder on BuildContext {
   StateHolder<T> getStateHolder<T>() {
     return Provider.of<StateHolder<T>>(this, listen: false);
   }

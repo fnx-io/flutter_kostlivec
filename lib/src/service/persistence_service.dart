@@ -1,13 +1,11 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:ui';
 
 import 'package:flutter/widgets.dart';
 import 'package:flutter_kostlivec/src/build_flavor.dart';
 import 'package:flutter_kostlivec/src/service/config_service.dart';
 import 'package:flutter_kostlivec/src/state/config_state.dart';
 import 'package:flutter_kostlivec/src/state/persistent_state.dart';
-import 'package:flutter_kostlivec/src/state/serializers.dart';
 import 'package:flutter_kostlivec/src/state/state_holder.dart';
 import 'package:flutter_kostlivec/src/util.dart';
 import 'package:path_provider/path_provider.dart';
@@ -49,8 +47,8 @@ class PersistenceService extends WidgetsBindingObserver {
   Future loadPreviousState() async {
     File state = await _getStateJsonFile();
     if (await state.exists()) {
-      String json = await state.readAsString();
-      PersistentState p = serializers.deserialize(jsonDecode(json)) as PersistentState;
+      String jsonString = await state.readAsString();
+      PersistentState p = PersistentState.fromJson(jsonDecode(jsonString));
       _restorePersistentState(p);
     }
   }
@@ -68,7 +66,7 @@ class PersistenceService extends WidgetsBindingObserver {
 
   PersistentState _buildPersistentState() {
     Locale? l = config.state.locale;
-    PersistentState p = PersistentState((b) => b..language = l!.languageCode);
+    PersistentState p = PersistentState(language: l!.languageCode);
     return p;
   }
 
@@ -78,9 +76,8 @@ class PersistenceService extends WidgetsBindingObserver {
   }
 
   Future _savePersistentState(PersistentState s) async {
-    Object? serialized = serializers.serialize(s);
+    Object? serialized = s.toJson();
     String json = jsonEncode(serialized);
-
     File state = await _getStateJsonFile();
     await state.writeAsString(json);
   }

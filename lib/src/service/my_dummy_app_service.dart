@@ -14,15 +14,13 @@ class MyDummyAppService {
   StateHolder<MyDummyAppState> get holder => getMy<StateHolder<MyDummyAppState>>();
 
   MyDummyAppState prepareDefaultState(BuildFlavor mode) {
-    return MyDummyAppState((MyDummyAppStateBuilder b) => b..counter = 1);
+    return MyDummyAppState(counter: 1);
   }
 
   ///
   /// Demo metoda - zvedni pocitadlo.
   ///
   void incrementCounter() {
-    holder.state = holder.state.rebuild((MyDummyAppStateBuilder b) {
-      b.counter = b.counter! + 1;
-    });
+    holder.state = holder.state.copyWith(counter: holder.state.counter + 1);
   }
 }

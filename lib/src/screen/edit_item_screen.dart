@@ -76,7 +76,7 @@ class _EditItemState extends State<EditItemScreen> {
 
   void _updateName(String newName) {
     var holder = context.getStateHolder<ItemState>();
-    holder.state = holder.state.rebuild((b) => b..name = newName);
+    holder.state = holder.state.copyWith(name: newName);
   }
 
   void _save(BuildContext context) {

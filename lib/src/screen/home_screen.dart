@@ -46,19 +46,13 @@ class _HomeScreenState extends State<HomeScreen> {
             ElevatedButton(
                 child: Text(context.messages.editNewItem),
                 onPressed: () async {
-                  var someItemToEdit = ItemState((ItemStateBuilder b) => b
-                    ..index = 0
-                    ..name = "Položka Vlastička"
-                    ..info = "Zatím nic");
+                  var someItemToEdit = ItemState(index: 0, name: "Položka Vlastička", info: "Zatím nic");
                   await getMy<StoryService>().startItemEdit(context, someItemToEdit);
                 }),
             ElevatedButton(
                 child: Text(context.messages.startWizard),
                 onPressed: () async {
-                  var someItemToEdit = ItemState((ItemStateBuilder b) => b
-                    ..index = 1
-                    ..name = "Průvodkyně Vlastička"
-                    ..info = "Info o průvodci");
+                  var someItemToEdit = ItemState(index: 1, name: "Průvodkyně Vlastička", info: "Info o průvodci");
                   await getMy<StoryService>().startWizard(context, someItemToEdit);
                 }),
           ],
